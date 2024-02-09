@@ -1,5 +1,5 @@
-from watchlist_app.models import Movie
-from watchlist_app.api.serializers import Movieserilizer
+from watchlist_app.models import Watchlist, StreamPlatform
+from watchlist_app.api.serializers import Watchlistserilizer, StreamPlatformSerializer
 from rest_framework.response import Response
 
 # from rest_framework.decorators import api_view
@@ -7,42 +7,57 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 
-class MovieListAV(APIView):
-
+class StreamPlatformAV(APIView):
     def get(self, request):
-        movies = Movie.objects.all()
-        serializer = Movieserilizer(movies, many=True)
+
+        platform = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(platform, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = Movieserilizer(data=request.data)
+        serializer = StreamPlatformSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class MovieDetailAV(APIView):
+class WatchListAV(APIView):
+
+    def get(self, request):
+        movies = Watchlist.objects.all()
+        serializer = Watchlistserilizer(movies, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = Watchlistserilizer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class WatchDetailAV(APIView):
     def get(self, request, pk):
         try:
-            movie = Movie.objects.get(pk=pk)
-        except Movie.DoesNotExist:
+            movie = Watchlist.objects.get(pk=pk)
+        except Watchlist.DoesNotExist:
             return Response(
                 {"Error": "Movie NOt Found"}, status=status.HTTP_404_NOT_FOUND
             )
-        serializer = Movieserilizer(movie)
+        serializer = Watchlistserilizer(movie)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        movie = Movie.objects.get(pk=pk)
-        serializer = Movieserilizer(movie, data=request.data)
+        movie = Watchlist.objects.get(pk=pk)
+        serializer = Watchlistserilizer(movie, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        movie = Movie.objects.get(pk=pk)
+        movie = Watchlist.objects.get(pk=pk)
         movie.delete()
         return Response(status=204)
 
@@ -51,10 +66,10 @@ class MovieDetailAV(APIView):
 # def movie_list(request):
 #     if request.method == "GET":
 #         movies = Movie.objects.all()
-#         serializer = Movieserilizer(movies, many=True)
+#         serializer = Watchlistserilizer(movies, many=True)
 #         return Response(serializer.data)
 #     if request.method == "POST":
-#         serializer = Movieserilizer(data=request.data)
+#         serializer = Watchlistserilizer(data=request.data)
 #         if serializer.is_valid():
 #             serializer.save()
 #             return Response(serializer.data)
@@ -69,11 +84,11 @@ class MovieDetailAV(APIView):
 #         except Movie.DoesNotExist:
 #             return Response({"Error":"Movie not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-#         serializer = Movieserilizer(movie)
+#         serializer = Watchlistserilizer(movie)
 #         return Response(serializer.data)
 #     if request.method == "PUT":
 #         movie = Movie.objects.get(pk=pk)
-#         serializer = Movieserilizer(movie, data=request.data)
+#         serializer = Watchlistserilizer(movie, data=request.data)
 #         if serializer.is_valid():
 #             serializer.save()
 #             return Response(serializer.data)
