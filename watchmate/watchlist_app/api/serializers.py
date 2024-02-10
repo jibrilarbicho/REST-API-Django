@@ -5,20 +5,21 @@ from watchlist_app.models import Watchlist, StreamPlatform
 # def length(value):
 #     if len(value) < 6:
 
+
 #         raise serializers.ValidationError(f"{value} is too short")
-
-
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StreamPlatform
-        fields = "__all__"
-
-
 class Watchlistserilizer(serializers.ModelSerializer):
     # len_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Watchlist
+        fields = "__all__"
+
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    watchlist = Watchlistserilizer(many=True, read_only=True)
+
+    class Meta:
+        model = StreamPlatform
         fields = "__all__"
 
         # exclude = ["active"]
