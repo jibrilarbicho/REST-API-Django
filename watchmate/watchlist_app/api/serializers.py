@@ -1,14 +1,19 @@
 from rest_framework import serializers
-from watchlist_app.models import Watchlist, StreamPlatform
+from watchlist_app.models import Watchlist, StreamPlatform, Review
 
 
 # def length(value):
 #     if len(value) < 6:
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
 
 
 #         raise serializers.ValidationError(f"{value} is too short")
 class Watchlistserilizer(serializers.ModelSerializer):
     # len_name = serializers.SerializerMethodField()
+    review = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Watchlist
