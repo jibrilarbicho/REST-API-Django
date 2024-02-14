@@ -5,6 +5,7 @@ from .views import (
     StreamPlatformDetailAV,
     ReviewList,
     ReviewDetail,
+    ReviewCreate,
 )
 
 # from watchlist_app.views import movie_list, movie_detail
@@ -16,8 +17,9 @@ urlpatterns = [
     path("<int:pk>", WatchDetailAV.as_view(), name="movie_detail"),
     path("stream/", StreamPlatformAV.as_view(), name="stream"),
     path("stream/<int:pk>", StreamPlatformDetailAV.as_view(), name="stream"),
-    path("stream/1/review", StreamPlatformAV.as_view(), name="stream"),
-    path("stream/1/review/<int:pk>", StreamPlatformAV.as_view(), name="stream"),
-    path("review", ReviewList.as_view(), name="review_list"),
-    path("review/<int:pk>", ReviewDetail.as_view(), name="review_detail"),
+    path("stream/<int:pk>/review", ReviewList.as_view(), name="review_list"),
+    path("stream/<int:pk>/review_create", ReviewCreate.as_view(), name="review_list"),
+    path("stream/review/<int:pk>", ReviewDetail.as_view(), name="review_detail"),
+    # path("review", ReviewList.as_view(), name="review_list"),
+    # path("review/<int:pk>", ReviewDetail.as_view(), name="review_detail"),
 ]

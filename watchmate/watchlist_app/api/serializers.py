@@ -7,7 +7,7 @@ from watchlist_app.models import Watchlist, StreamPlatform, Review
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = "__all__"
+        exclude = ["watchlist"]
 
 
 #         raise serializers.ValidationError(f"{value} is too short")
