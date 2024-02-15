@@ -5,6 +5,8 @@ from watchlist_app.models import Watchlist, StreamPlatform, Review
 # def length(value):
 #     if len(value) < 6:
 class ReviewSerializer(serializers.ModelSerializer):
+    review_user = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Review
         exclude = ["watchlist"]
