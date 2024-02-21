@@ -8,7 +8,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
-from watchlist_app.api.permissions import AdminOrReadOnly,ReviewUserOrReadOnly
+from watchlist_app.api.permissions import AdminOrReadOnly,IsReviewUserOrReadOnly
 # from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import status
@@ -40,7 +40,7 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [ReviewUserOrReadOnly]
+    permission_classes = [IsReviewUserOrReadOnly]
 
 
 
@@ -48,7 +48,7 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [AdminOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         pk = self.kwargs["pk"]
@@ -93,6 +93,8 @@ class StreamPlatformAV(APIView):
 
 
 class StreamPlatformDetailAV(APIView):
+    permission_classes=[AdminOrReadOnly]
+
     def get(self, request, pk):
         try:
             movie = StreamPlatform.objects.get(pk=pk)
@@ -118,6 +120,8 @@ class StreamPlatformDetailAV(APIView):
 
 
 class WatchListAV(APIView):
+    permission_classes=[AdminOrReadOnly]
+
 
     def get(self, request):
         movies = Watchlist.objects.all()
@@ -133,6 +137,7 @@ class WatchListAV(APIView):
 
 
 class WatchDetailAV(APIView):
+    permission_classes=[AdminOrReadOnly]
     def get(self, request, pk):
         try:
             movie = Watchlist.objects.get(pk=pk)
