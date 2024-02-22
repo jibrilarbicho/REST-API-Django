@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "watchlist_app",
     "rest_framework",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    'django_filters',
 
 ]
 
@@ -130,29 +131,29 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
     
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     # 'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
 
-    ]
-    , 'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    # ]
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
     # ,'DEFAULT_THROTTLE_CLASSES': [
     #     'rest_framework.throttling.AnonRateThrottle',
     #     'rest_framework.throttling.UserRateThrottle'
     # ],
-    ,
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/day',
-        'user': '10/day',
-        'review_create': '1/day',
-        "review_list":"10/day"
-    }
+    
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '5/day',
+    #     'user': '10/day',
+    #     'review_create': '1/day',
+    #     "review_list":"10/day"
+    # }
 }
 
-SIMPLE_JWT = {
-        "ROTATE_REFRESH_TOKENS": True,#To generate new Refresh  token
+# SIMPLE_JWT = {
+#         "ROTATE_REFRESH_TOKENS": True,#To generate new Refresh  token
 
-}
+# }
 
